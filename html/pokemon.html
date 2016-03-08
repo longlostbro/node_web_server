@@ -1,0 +1,60 @@
+<html>
+	<head>
+		<title>Pokemon Finder</title>
+		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	</head>
+	<body>
+		<a style="text-align:center; width:100%;" href="index.html">Home</a>
+		<br>
+		<br>
+		<form>
+			Enter A Number: <input type="number" id="pokemon_number" value=""><br>
+		</form>
+		<div id="pokemon_data"></div>
+	</body>
+</html>
+<script>
+var pokemon;
+	$(document).ready(function() {
+		$( "#pokemon_number" ).keyup(function() {
+			console.log("Keyed up");
+			var url = "~/getpokemon?q="+$("#pokemon_number").val();
+			$.getJSON(url,function(data) {
+		    pokemon = data;
+		    $("#pokemon_data").html("<h1>"+pokemon.name+"</h1>");
+		    var content = ("<p>Pokemon Number: "+pokemon.id+"</p>");
+		    content+=("<div><img width='200' src='/pokemon/"+('000'+pokemon.id).slice(-3)+".gif'/></div>");
+		    content+=("<span style='float:left; width:10%;'><p><b>Learnable Moves</b></p>");
+		    for(var key in pokemon.moves)
+		    {
+		    	content+=("<p>"+pokemon.moves[key]+"</p>");
+		    }
+		    content+=("</span><span style='float:left; margin:0; width:10%;'><p><b>Abilities</b></p>");
+		    for(var key in pokemon.abilities)
+		    {
+		    	content+=("<p>"+pokemon.abilities[key]+"</p>");
+		    }
+		    content+=("</span><span style='float:left; margin:0; width:10%;'><p><b>Types</b></p>");
+		    for(var key in pokemon.types)
+		    {
+		    	content+=("<p>"+pokemon.types[key].type.name+"</p>");
+		    }
+		    content+=("</span><span style='float:left; margin:0; width:10%;'><p><b>Base Stats</b></p>");
+		    for(var key in pokemon.stats)
+		    {
+		    	content+=("<p>"+pokemon.stats[key].stat.name+": "+pokemon.stats[key].base_stat+"</p>");
+		    }
+		    content+=("</span>");
+		    $("#pokemon_data").append(content);
+		  })
+		  .done(function() { console.log('getJSON request succeeded!'); })
+		  .fail(function(jqXHR, textStatus, errorThrown) { 
+		    console.log('getJSON request failed! ' + textStatus); 
+		    console.log("incoming "+jqXHR.responseText);
+		  })
+		  .always(function() { console.log('getJSON request ended!');
+		  })
+		  .complete(function() { console.log("complete"); });
+		});
+	});
+</script>

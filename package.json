@@ -1,0 +1,24 @@
+{
+  "name": "lab7",
+  "version": "1.0.0",
+  "description": "",
+  "main": "http_server_static.js",
+  "dependencies": {
+    "path": "^0.12.7",
+    "request": "^2.69.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/longlostbro/node_web_server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/longlostbro/node_web_server/issues"
+  },
+  "homepage": "https://github.com/longlostbro/node_web_server#readme"
+}

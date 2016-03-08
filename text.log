@@ -1,0 +1,7 @@
+Server listening on port 3001
+Serving file from root html/
+'/getpokemon'
+In REST Service
+dir: /opt/bitnami/apache2/htdocs/cs360/lab7/pokemon.json
+Query: 1
+Data:10

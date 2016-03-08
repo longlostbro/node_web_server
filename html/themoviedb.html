@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>Movie Search</title>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+<a href="index.html">Home</a>
+<br><br>
+<form>
+Search for a movie: <input type="text" id="movieQuery" value="">
+<input id="button" type="submit" value="Submit">
+</form>
+<div id="movie_results">No Results</div>
+
+</body>
+</html>
+<script>
+var apikey = "&api_key=91f6c14578394b250d494f62f4505a6f";
+var baseUrl = "http://api.themoviedb.org/3/";
+var query = "search/movie?query=";
+var img_base_url = "http://image.tmdb.org/t/p/";
+var config_url="http://api.themoviedb.org/3/configuration";
+// construct the uri with our apikey
+$(document).ready(function() {
+	get(config_url+"?"+apikey,"jsonp",function(data){img_base_url = data.images.base_url+data.images.poster_sizes[0]})
+	$("#button").click(function(e)
+	{
+		var url = baseUrl + query+$("#movieQuery").val() + apikey;
+		get(url,"jsonp",results);
+		e.preventDefault();
+	});
+  
+});
+
+// callback for when we get back the results
+function results(data) {
+	$("#movie_results").html(data.results.length+" Results for search '"+$("#movieQuery").val()+"'");
+	data.results.forEach(function(item){$("#movie_results").append("<hr><ul>").append("<li>Title: "+item.title+"</li>").append("<li><img src="+img_base_url+item.poster_path+"></img></li>").append("<li>Popularity: "+item.popularity+"</li>").append("</ul><hr>")});
+}
+
+function get(url,type,callback)
+{
+	$.ajax({
+		    url: url,
+		    dataType: type,
+		    success: callback
+		});
+}
+
+</script>
